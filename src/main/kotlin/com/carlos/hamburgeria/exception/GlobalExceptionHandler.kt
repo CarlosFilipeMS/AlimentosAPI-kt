@@ -22,12 +22,31 @@ class GlobalExceptionHandler {
     }
 
     @ExceptionHandler
+    fun handlerRunTimeException(ex: RuntimeException): ResponseEntity<MensagemException>{
+        val mensagemException = MensagemException(
+            HttpStatus.NOT_FOUND.value(),
+            ex.message
+        )
+
+        return ResponseEntity(mensagemException, HttpStatus.NOT_FOUND)
+    }
+
+    @ExceptionHandler
     fun handlerNoSuchElementExceptionException(ex: NoSuchElementException): ResponseEntity<MensagemException>{
         val mensagemException = MensagemException(
             HttpStatus.BAD_REQUEST.value(),
             ex.message
         )
 
+        return ResponseEntity(mensagemException, HttpStatus.BAD_REQUEST)
+    }
+
+    @ExceptionHandler
+    fun handlerNullPointerException(ex: NullPointerException): ResponseEntity<MensagemException>{
+        val mensagemException = MensagemException(
+            HttpStatus.BAD_REQUEST.value(),
+            ex.message
+        )
         return ResponseEntity(mensagemException, HttpStatus.BAD_REQUEST)
     }
 }

@@ -2,6 +2,7 @@ package com.carlos.hamburgeria.repository
 
 import com.carlos.hamburgeria.controller.Dto.AlimentoDto
 import com.carlos.hamburgeria.domain.Alimento
+import com.carlos.hamburgeria.exception.ElementoNaoEncontradoException
 import org.springframework.stereotype.Component
 
 @Component
@@ -24,12 +25,20 @@ class AlimentoRepositoryEmMemoria(): AlimentoRepository {
         return alimentoLista
     }
 
-    override fun findByNome(pesquisa: Any): Alimento {
-        return alimentoLista.first{it.nome == pesquisa}
+    override fun findByNome(pesquisa: String): Alimento {
+        try{
+            return  alimentoLista.first(){it.nome == pesquisa}
+        }catch (exception: NoSuchElementException){
+            throw ElementoNaoEncontradoException("Alimento não encontrado $pesquisa")
+        }
     }
 
-    override fun findeById(id: Any): Alimento {
-        return alimentoLista.first{it.id == id}
+    override fun findById(id: Long): Alimento {
+        try{
+            return  alimentoLista.first(){it.id == id}
+        }catch (exception: NoSuchElementException){
+            throw ElementoNaoEncontradoException("Alimento não encontrado $id")
+        }
     }
 
     override fun delete(id: Long) {

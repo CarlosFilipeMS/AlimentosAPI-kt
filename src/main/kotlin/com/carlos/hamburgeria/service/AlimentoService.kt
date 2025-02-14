@@ -24,7 +24,7 @@ class AlimentoService(
         if(id == null){
             return alimentoRepository.findByNome(pesquisa)
         }else{
-            return alimentoRepository.findeById(id)
+            return alimentoRepository.findById(id)
         }
     }
 
